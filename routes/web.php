@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::resource( '/users', UserController::class );
 
-// For Pages
+// User Authentication Pages
 Route::get( '/login', [UserController::class, 'loginPage'] );
 Route::get( '/registration', [UserController::class, 'regiPage'] );
 Route::get( '/otp', [UserController::class, 'otpPage'] );
@@ -25,8 +25,10 @@ Route::get( '/verify', [UserController::class, 'verifyotpPage'] );
 Route::get( '/reset', [UserController::class, 'resetPassPage'] )
     ->middleware( [TokenVerificationMiddleware::class] );
 
-// Dashboard
+// Dashboard Pages
 Route::get( '/dashboard', [UserController::class, 'dashboardPage'] )
+    ->middleware( [TokenVerificationMiddleware::class] );
+Route::get( '/profile', [UserController::class, 'ProfilePage'] )
     ->middleware( [TokenVerificationMiddleware::class] );
 
 // For Api Call
@@ -46,5 +48,13 @@ Route::post( '/verifiedOTP', [UserController::class, 'VerifiedOTP'] );
 // TOken Verification
 Route::post( '/pass-reset', [UserController::class, 'ResetPass'] );
 
-// Log Out User 
+// Log Out User
 Route::get( '/logout', [UserController::class, 'logOut'] );
+
+// User Profile Data
+Route::get( '/user-profile', [UserController::class, 'UserProfile'] )
+    ->middleware( [TokenVerificationMiddleware::class] );
+
+// User Profile Update
+Route::post( '/userUdate', [UserController::class, 'userUdate'] )
+    ->middleware( [TokenVerificationMiddleware::class] );
